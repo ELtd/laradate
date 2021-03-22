@@ -31,8 +31,8 @@ class ViewPollController extends Controller
                 'title' => __('error.This poll doesn\'t exist !')
             ], 404);
         }
-
-        $editedVoteUniqueId = session()->get('UserVotes')[$poll->id];
+        $userVotes=session()->get('UserVotes');
+        $editedVoteUniqueId = $userVotes[$poll->id]??null;
 
         if (!is_null($poll->password_hash)) {
             $password = null;
