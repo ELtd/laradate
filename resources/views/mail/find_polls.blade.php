@@ -3,7 +3,7 @@
     @foreach ($polls as $poll)
         <li>
             <a href="{{ \App\Utils::getPollUrl($poll->admin_id, true) }}">{{ $poll->title }}</a>
-            @lang('generic.Creation date:') {{ strftime(__('date.FULL'), strtotime($poll->creation_date)) }}
+            @lang('generic.Creation date:') {{ Date::createFromTimestamp(strtotime($poll->creation_date))->format(__('date.FULL')) }}
         </li>
     @endforeach
 </ul>

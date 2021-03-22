@@ -115,12 +115,12 @@
                 </div>
                 <div id="expiration-form" class="form-group col-md-4">
                     <label class="control-label">@lang('pollinfo.Expiration date')</label>
-                    <p>{{ strftime(__('date.DATE'), strtotime($poll->end_date)) }} <button class="btn btn-link btn-sm btn-edit" title="@lang('pollinfo.Edit the expiration date') }}"><span class="glyphicon glyphicon-pencil"></span><span class="sr-only">@lang('generic.Edit')</span></button></p>
+                    <p>{{ Date::createFromTimestamp(strtotime($poll->end_date))->format(__('date.FULL')) }} <button class="btn btn-link btn-sm btn-edit" title="@lang('pollinfo.Edit the expiration date') }}"><span class="glyphicon glyphicon-pencil"></span><span class="sr-only">@lang('generic.Edit')</span></button></p>
 
                         <div class="hidden js-expiration">
                             <label class="sr-only" for="newexpirationdate">@lang('pollinfo.Expiration date')</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="newexpirationdate" name="expiration_date" size="40" value="{{ strftime(__('date.DATE'), strtotime($poll->end_date)) }}" />
+                                <input type="text" class="form-control" id="newexpirationdate" name="expiration_date" size="40" value="{{ Date::createFromTimestamp(strtotime($poll->end_date))->format(__('date.DATE')) }}" />
                                 <span class="input-group-btn">
                                     <button type="submit" class="btn btn-success" name="update_poll_info" value="expiration_date" title="@lang('pollinfo.Save the new expiration date')"><span class="glyphicon glyphicon-ok"></span><span class="sr-only">@lang('generic.Save')</span></button>
                                     <button class="btn btn-link btn-cancel" title="@lang('pollinfo.Cancel the expiration date edit')"><span class="glyphicon glyphicon-remove"></span><span class="sr-only">@lang('generic.Cancel')</span></button>

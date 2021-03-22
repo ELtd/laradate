@@ -28,7 +28,7 @@
                                 <a href="{{ \App\Utils::getPollUrl($admin_poll_id, true, '', 'delete_column', \App\Utils::base64url_encode($slot->day.'@'.$moment)) }}"
                                    data-remove-confirmation="@lang('adminpoll.Confirm removal of the column.')"
                                    class="btn btn-link btn-sm remove-column"
-                                   title="@lang('adminpoll.Remove the column') {{ strftime(__('date.SHORT'), $slot->day) }} - {{  $moment }}">
+                                   title="@lang('adminpoll.Remove the column') {{ Date::createFromTimestamp($slot->day)->format(__('date.SHORT')) }} - {{  $moment }}">
                                     <i class="glyphicon glyphicon-remove text-danger"></i><span class="sr-only">@lang('generic.Remove')</span>
                                 </a>
                             </td>
@@ -49,7 +49,8 @@
                 <?php $previous = 0; ?>
                 <?php $i = 0; ?>
                 @foreach ($slots as $id=>$slot)
-                    <?php $display = strftime(__('date.MONTH_YEAR'), $slot->day); ?>
+                
+                    <?php $display = Date::createFromTimestamp($slot->day)->format(__('date.MONTH_YEAR')); ?>
                     @if ($previous !== 0 && $previous != $display)
                         <th colspan="{{ $count_same }}" class="bg-primary month" id="M{{ $id }}">{{ $previous }}</th>
                         <?php $count_same = 0; ?>
@@ -74,7 +75,7 @@
                 <th role="presentation"></th>
                 <?php $i = 0; ?>
                 @foreach ($slots as $id=>$slot)
-                    <th colspan="{{ count($slot->moments) }}" class="bg-primary day" id="D{{ $id }}">{{ strftime(__('date.DAY'), $slot->day) }}</th>
+                    <th colspan="{{ count($slot->moments) }}" class="bg-primary day" id="D{{ $id }}">{{ Date::createFromTimestamp($slot->day)->format(__('date.DAY')) }}</th>
                     @for ($foo=0; $foo <= count($slot->moments)-1; $foo++)
                         <?php $headersD[$i] = $id; ?>
                         <?php $i++; ?>
@@ -92,7 +93,7 @@
                         <th colspan="1" class="bg-info" id="H{{ $headersDCount }}">{{ $moment }}</th>
                         <?php $headersH[$i] = $headersDCount; ?>
                         <?php $headersDCount++; ?>
-                        <?php $slots_raw[] = strftime(__('date.FULL'), $slot->day) ?>
+                        <?php $slots_raw[] = Date::createFromTimestamp($slot->day)->format(__('date.FULL')) ?>
                         <?php $i++; ?>
                     @endforeach
                 @endforeach
@@ -237,20 +238,20 @@
                                     @if ($poll->valueMax == NULL || isset($best_choices['y'][$i]) && $best_choices['y'][$i] < $poll->valueMax)
                                         <li class="yes">
                                             <input type="radio" id="y-choice-{{ $i }}" name="choices[{{ $i }}]" value="2" />
-                                            <label class="btn btn-default btn-xs" for="y-choice-{{ $i }}" title="@lang('poll_results.Vote yes for') {{ strftime(__('date.SHORT'), $slot->day) }} - {{ $moment }}">
+                                            <label class="btn btn-default btn-xs" for="y-choice-{{ $i }}" title="@lang('poll_results.Vote yes for') {{ Date::createFromTimestamp($slot->day)->format(__('date.SHORT')) }} - {{ $moment }}">
                                                 <i class="glyphicon glyphicon-ok"></i><span class="sr-only">@lang('generic.Yes')</span>
                                             </label>
                                         </li>
                                         <li class="ifneedbe">
                                             <input type="radio" id="i-choice-{{ $i }}" name="choices[{{ $i }}]" value="1" />
-                                            <label class="btn btn-default btn-xs" for="i-choice-{{ $i }}" title="@lang('poll_results.Vote ifneedbe for') {{ strftime(__('date.SHORT'), $slot->day) }}- {{ $moment }}">
+                                            <label class="btn btn-default btn-xs" for="i-choice-{{ $i }}" title="@lang('poll_results.Vote ifneedbe for') {{ Date::createFromTimestamp($slot->day)->format(__('date.SHORT')) }}- {{ $moment }}">
                                                 (<i class="glyphicon glyphicon-ok"></i>)<span class="sr-only">@lang('generic.Ifneedbe')</span>
                                             </label>
                                         </li>
                                     @endif
                                     <li class="no">
                                         <input type="radio" id="n-choice-{{ $i }}" name="choices[{{ $i }}]" value="0" />
-                                        <label class="btn btn-default btn-xs startunchecked" for="n-choice-{{ $i }}" title="@lang('poll_results.Vote no for') {{ strftime(__('date.SHORT'), $slot->day) }} - {{ $moment }}">
+                                        <label class="btn btn-default btn-xs startunchecked" for="n-choice-{{ $i }}" title="@lang('poll_results.Vote no for') {{ Date::createFromTimestamp($slot->day)->format(__('date.SHORT')) }} - {{ $moment }}">
                                             <i class="glyphicon glyphicon-ban-circle"></i><span class="sr-only">@lang('generic.No')</span>
                                         </label>
                                     </li>
@@ -331,7 +332,7 @@
                 var cols = [
                 @foreach ($slots as $slot)
                     @foreach ($slot->moments as $moment)
-                        $('<div/>').html('{{ strftime(__('date.FULL'), $slot->day) }} - {{  $moment }}').text(),
+                        $('<div/>').html('{{ Date::createFromTimestamp($slot->day)->format(__('date.FULL')) }} - {{  $moment }}').text(),
                     @endforeach
                 @endforeach
                 ];
@@ -391,7 +392,7 @@
                     @foreach ($slots as $slot)
                         @foreach ($slot->moments as $moment)
                             @if (isset($best_choices['y'][$i]) && $best_choices['y'][$i] == $max)
-                                <li><strong>{{ strftime(__('date.FULL'), $slot->day) }} - {{  $moment }}</strong></li>
+                                <li><strong>{{ Date::createFromTimestamp($slot->day)->format(__('date.FULL')) }} - {{  $moment }}</strong></li>
                             @endif
                             <?php $i++; ?>
                         @endforeach

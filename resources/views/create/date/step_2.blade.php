@@ -40,7 +40,7 @@
                 <div id="days_container">
                     @foreach ($choices as $i=>$choice)
                         @if ($choice->getName())
-                            <?php $day_value = strftime(__('date.DATE'), $choice->getName()) ?>
+                            <?php $day_value = Date::createFromTimestamp($choice->getName())->format(__('date.DATE')) ?>
                         @else
                             <?php $day_value = '' ?>
                         @endif

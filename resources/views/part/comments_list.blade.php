@@ -8,7 +8,7 @@
                     @if ($admin && !$expired)
                         <a href="{{ \App\Utils::getPollUrl($admin_poll_id, true, '', 'delete_comment', $comment->id) }}" title="@lang('comments.Remove the comment')"><span class="glyphicon glyphicon-remove text-danger"></span><span class="sr-only">@lang('generic.Remove')</span></a>
                     @endif
-                    <span class="comment_date">{{ strftime(__('date.DATETIME'), strtotime($comment->date)) }}</span>
+                    <span class="comment_date">{{ Date::createFromTimestamp(strtotime($comment->date))->format(__('date.FULL')) }}</span>
                     <b>{{ $comment->name }}</b>&nbsp;
                     <span>{{ $comment->comment }}</span>
                 </div>

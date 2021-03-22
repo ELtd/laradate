@@ -36,7 +36,8 @@ class CreatePollCsvController extends Controller
             $titlesLine = ',';
             $momentsLine = ',';
             foreach ($slots as $slot) {
-                $title = Utils::csvEscape(strftime(__('date.date'), $slot->title));
+                
+                $title = Utils::csvEscape(\Date::createFromTimestamp($slot->title)->format(__('date.DATE')));
                 $moments = explode(',', $slot->moments);
 
                 $titlesLine .= str_repeat($title . ',', count($moments));

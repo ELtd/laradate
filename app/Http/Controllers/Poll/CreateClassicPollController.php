@@ -131,7 +131,7 @@ class CreateClassicPollController extends Controller
                 }
                 $summary .= '</ol>';
 
-                $end_date_str = utf8_encode(strftime(__('date.DATE'), $maxExpiryDate)); //textual date
+                $end_date_str = utf8_encode(\Date::createFromTimestamp($maxExpiryDate)->format(__('date.DATE'))); //textual date
 
                 return view('create.classic.step_3', [
                     'title' => __('step_3.Removal date and confirmation (3 on 3)'),

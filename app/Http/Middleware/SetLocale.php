@@ -18,12 +18,14 @@ class SetLocale
     {
         if (session()->has('lang')) {
             App::setLocale(session()->get('lang'));
+            \Date::setLocale(session()->get('lang'));
         }
 
         // Change language when user asked for it
         if ($request->has('lang') && is_string($request->input('lang'))
             && in_array($request->input('lang'), array_keys(config('laradate.ALLOWED_LANGUAGES')))) {
             App::setLocale(request('lang'));
+            \Date::setLocale(session()->get('lang'));
             session()->put('lang', $request->input('lang'));
             session()->save();
         }

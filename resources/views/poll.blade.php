@@ -30,7 +30,7 @@
         @if ($expired)
             <div class="alert alert-danger">
                 <p>@lang('poll.The poll is expired, it will be deleted soon.')</p>
-                <p>@lang('poll.Deletion date:') {{ strftime(__('date.SHORT'), $deletion_date) }}</p>
+                <p>@lang('poll.Deletion date:') {{ Date::createFromTimestamp($deletion_day)->format(__('date.SHORT')) }}</p>
             </div>
         @else
             @if ($admin)

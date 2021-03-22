@@ -134,7 +134,7 @@ class CreateDatePollController extends Controller
                 $summary = '<ul>';
                 $choices = $form->getChoices();
                 foreach ($choices as $choice) {
-                    $summary .= '<li>' . strftime(__('date.FULL'), $choice->getName());
+                    $summary .= '<li>' . \Date::createFromTimestamp($choice->getName())->format(__('date.FULL'));
                     $first = true;
                     foreach ($choice->getSlots() as $slots) {
                         $summary .= $first ? ': ' : ', ';
@@ -145,7 +145,7 @@ class CreateDatePollController extends Controller
                 }
                 $summary .= '</ul>';
 
-                $end_date_str = utf8_encode(strftime(__('date.DATE'), $maxExpiryDate)); //textual date
+                $end_date_str = utf8_encode(\Date::createFromTimestamp($maxExpiryDate)->format(__('date.DATE'), )); //textual date
 
 
                 return view('create.classic.step_3', [
