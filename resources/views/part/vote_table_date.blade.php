@@ -47,6 +47,7 @@
                 <th role="presentation"></th>
                 <?php $count_same = 0; ?>
                 <?php $previous = 0; ?>
+                <?php $i = 0; ?>
                 @foreach ($slots as $id=>$slot)
                     <?php $display = strftime(__('date.MONTH_YEAR'), $slot->day); ?>
                     @if ($previous !== 0 && $previous != $display)
@@ -63,17 +64,20 @@
                     <?php $previous = $display; ?>
 
                     @for ($foo=0; $foo <= count($slot->moments)-1; $foo++)
-                        <?php $headersM = $id; ?>
+                        <?php $headersM[$i] = $id; ?>
+                        <?php $i++; ?>
                     @endfor
                 @endforeach
                 <th></th>
             </tr>
             <tr>
                 <th role="presentation"></th>
+                <?php $i = 0; ?>
                 @foreach ($slots as $id=>$slot)
                     <th colspan="{{ count($slot->moments) }}" class="bg-primary day" id="D{{ $id }}">{{ strftime(__('date.DAY'), $slot->day) }}</th>
                     @for ($foo=0; $foo <= count($slot->moments)-1; $foo++)
-                        <?php $headersD = $id; ?>
+                        <?php $headersD[$i] = $id; ?>
+                        <?php $i++; ?>
                     @endfor
                 @endforeach
                 <th></th>
@@ -82,12 +86,14 @@
                 <th role="presentation"></th>
                 <?php $headersDCount = 0; ?>
                 <?php $slots_raw = []; ?>
+                <?php $i = 0; ?>
                 @foreach ($slots as $slot)
                     @foreach ($slot->moments as $id=>$moment)
                         <th colspan="1" class="bg-info" id="H{{ $headersDCount }}">{{ $moment }}</th>
-                        <?php $headersH = $headersDCount; ?>
+                        <?php $headersH[$i] = $headersDCount; ?>
                         <?php $headersDCount++; ?>
                         <?php $slots_raw[] = strftime(__('date.FULL'), $slot->day) ?>
+                        <?php $i++; ?>
                     @endforeach
                 @endforeach
                 <th></th>
@@ -222,6 +228,8 @@
                         </div>
                     </td>
                     <?php $i = 0; ?>
+                    
+                    <?php //dump(($slots));dd($headersM,$headersD,$headersH); ?>
                     @foreach ($slots as $slot)
                         @foreach ($slot->moments as $moment)
                             <td class="bg-info" headers="M{{ $headersM[$i] }} D{{ $headersD[$i] }} H{{ $headersH[$i] }}">
